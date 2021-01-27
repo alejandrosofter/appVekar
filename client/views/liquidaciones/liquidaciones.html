@@ -1,0 +1,123 @@
+<template name="cadaPagoPropietario">
+<tr><td>{{propietario}}</td><td>{{tipoComprobante}}</td><td>{{importe}}</td></tr>
+</template>
+<template name="cadaPagoFIDUCIARIO">
+<tr><td>{{fiduciario}}</td><td>{{porcentaje}}</td><td>{{importeA}}</td><td>{{importeB}}</td><td>{{total}}</td></tr>
+</template>
+<template name="cadaPagoPagos">
+<tr><td>{{comprador}}</td><td>{{lote}}</td><td>{{tipoComprobante}}</td><td>{{importe}}</td></tr>
+</template>
+<template name="imprimirLiquidacion">
+  <div class="modal fade"> 
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div  class="modal-body">
+                <div id="printable">
+                 <div style="float:right"> <b>FECHA:</b>{{fecha}} <br><b>$ IMPORTE A:</b>{{importeA}} <b>$ IMPORTE B:</b> {{importeB}}</div>
+                  <h2>LIQUIDACION <b>PAGOS</b> </h2>
+                 
+                   <h4>LIQUIDACION <b>PROPIETARIOS</b></h4>
+                   <table class="table table-condensed">
+                   <thead>  <tr><th>PROPIETARIO</th><th>TIPO COMPROBANTE</th><th>IMPORTE</th></tr> </thead>
+                   <tbody>
+                   {{# each pagosPropietarios}}
+	                   {{> cadaPagoPropietario}}
+                   {{/each}}
+                   </tbody>
+                   </table>
+                   
+                   
+                   <h4>LIQUIDACION <b>FIDUCIARIOS</b></h4>
+                   <table class="table table-condensed">
+                   <thead>  <tr><th>FIDUCIARIO</th><th>% PORCENTAJE</th><th>$ IMPORTE en A</th><th>$ IMPORTE en B</th><th>$ IMPORTE TOTAL</th></tr> </thead>
+                   <tbody>
+                   {{# each pagosFiduciarios}}
+	                   {{> cadaPagoFIDUCIARIO}}
+                   {{/each}}
+                   </tbody>
+                   </table>
+                   {{totalA}}
+                   <h4>LISTADO <b>PAGOS</b></h4>
+                   <table class="table table-condensed">
+                   <thead>  <tr><th>COMPRADOR</th><th>LOTE</th><th>TIPO COMPROBANTE</th><th>$ IMPORTE</th></tr> </thead>
+                   <tbody>
+                   {{# each pagos}}
+	                   {{> cadaPagoPagos}}
+                   {{/each}}
+                   </tbody>
+                   </table>
+                   </div>
+                   <button id="btnAceptar" style="width:100%" class="btn btn-success">
+                   <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
+ 
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</template>
+<template name="liquidaciones">
+   <h1><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> LIQUIDACIONES <small>modulo principal</small><button id="btnAgregar" style="float:right" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus" ></span> AGREGAR</button></h1>
+{{> reactiveTable id="tablaLiquidaciones" settings=settings}}
+
+</template>
+
+<template name="accionesLiquidaciones">
+  <div class="acciones" style="display:none">
+   <button title="Imprimir Liquidacion" type="button" class="imprimir btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+      <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+<template name='nuevaLiquidacion'>
+<h1><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> AGREGAR <small> liquidacion</small></h1>
+  {{#autoForm  collection="Liquidaciones" id="nuevaLiquidacion_" type="insert"}}
+<div class='col-md-7'>
+  <div class='col-md-4'>
+     <fieldset>
+     {{> afQuickField name='fecha'}}
+       {{> afQuickField name='importeA' id='importeA' style="width:130px" }}
+        {{> afQuickField name='importeB' id='importeB'  style="width:130px" }}
+    </fieldset>
+   
+  </div>
+  <div class='col-md-8'>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#pagosLiquidar" aria-controls="pagosLiquidar" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <b>PAGOS</b></a></li>
+    <li role="presentation"><a href="#pagosPropietarios" aria-controls="pagosPropietarios" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <b>A PROPIETARIOS</b></a></li>
+    <li role="presentation"><a href="#pagosFiduciarios" aria-controls="pagosFiduciarios" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <b>A FIDUCIARIOS</b></a></li>
+
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="pagosLiquidar"> {{> reactiveTable id="tablaPagosLiquidacion" settings=settings}} </div>
+    <div role="tabpanel" class="tab-pane" id="pagosPropietarios">{{> reactiveTable id="tablaPagosPropietario" settings=settingsPropietario}}</div>
+    <div role="tabpanel" class="tab-pane" id="pagosFiduciarios">{{> reactiveTable id="tablaPagosFiduciario" settings=settingsFiduciario}}</div>
+
+</div>
+
+</div>
+ <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR</button>
+ </div>
+ {{/autoForm}}
+
+</template>
+<template name='modificarLiquidacion'>
+<h1><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> EDITAR <small> liquidacion</small></h1>
+  {{#autoForm  collection="Fiduciarios" id="modificarFiduciario_" doc=this type="update"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+      {{> afQuickField name='fecha'}}
+       {{> afQuickField name='importe' style="width:180px" }}
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> MODIFICAR</button>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>

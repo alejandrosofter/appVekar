@@ -1,0 +1,116 @@
+<template name="presupuestos">
+   <h1><span class="glyphicon glyphicon-book" aria-hidden="true"></span> PRESUPUESTOS <small>modulo principal</small><button id="btnAgregar" style="float:right" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus" ></span> AGREGAR</button></h1>
+{{> reactiveTable id="tablaPresupuestos" settings=settings}}
+
+</template>
+<template name="itemPresupuesto">
+  <tr><td>{{nroCuota}} </td><td>{{fecha}} </td><td>$ {{importe}} </td></tr>
+
+</template>
+<template name="imprimirPresupuesto">
+    <div class="modal fade"> 
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                
+              <div class="modal-body">
+                  <div id="printable">
+                 <div style="float:right"> {{fechaLetras}} <br> <b>NRO PRESUPUESTO:</b> {{nroPresupuesto}} </div>
+  <h1> <b>COTIZACION</b> LOTE</h1>
+                   <b>RAZON SOCIAL:</b> {{razonSocial}}<br>
+                    <b>LOTE:</b> {{lote}}<br>
+                    <b>$ IMPORTE:</b> {{importe}}<br>
+                    <b>$ ENTREGA:</b> {{entrega}}<br>
+                    <b>$ CUOTA MENSUAL:</b> {{valorCuota}}<br>
+                    <b>INTERES:</b> {{interes}}<br>
+                    <b>CANT. CUOTAS:</b> {{cuotas}}<br>
+                    <b>VTO PRESUPUESTO:</b> {{vto}}<br>
+                    <br>
+                    <h3>DETALLE DE <b>CUOTAS</b> </h3>
+                    <table class="table table-condensed">
+                      <thead><th>CUOTA NRO</th><th>FECHA</th><th>$ IMPORTE</th></thead>
+                      <tbody>
+                    {{#each cuotasPresupuesto}}
+                    {{>itemPresupuesto}}
+                    {{/each}}
+                        </tbody>
+                    </table>
+                    <br><br><br><br><br>
+                   <div style="float:right">
+                      _________________________________<br>
+                    ADMINISTRACION URBANO Y NATURAL
+                   </div>
+                   <br><br>
+                </div>
+<button style="width:100%" id="imprimir" class="btn btn-success"> <span  class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir  </button>
+              </div>
+
+          </div>
+      </div>
+  </div>
+
+
+</template>
+<template name="accionesPresupuestos">
+  <div class="acciones" style="display:none">
+   <button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+     
+    <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+      <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+<template name='nuevoPresupuesto'>
+<h1><span class="glyphicon glyphicon-book" aria-hidden="true"></span> PRESUPUESTAR <small> LOTE</small></h1>
+  {{#autoForm  collection="Presupuestos" id="nuevoPresupuesto_" type="insert"}}
+
+  <div class='col-md-4'>
+      {{> afQuickField id="nroPresupuesto" name='nroPresupuesto'}}
+     {{> afQuickField name='fecha'}}
+      {{> afQuickField name='vto'}}
+        {{> afQuickField name='idEntidad'}}
+        {{> afQuickField id="idLote" name='idLote'}}
+        {{> afQuickField id="estado``" name='estado'}}
+      <h5 id="interesAplicado" style="color:red"></h5>
+    <h6 id="interesMensual" style="color:red"></h6>
+   <h3 id="valorCuota" style="color:green"></h3>
+
+  </div>
+  <div class='col-md-4'>
+     {{> afQuickField id="importe" name='importe'  }}
+     {{> afQuickField id="importeCuota" type="hidden" name='importeCuota'  }}
+       {{> afQuickField id="importeEntrega" name='importeEntrega'  }}
+       {{> afQuickField id="tasaInteres" name='tasaInteres'  }}
+       {{> afQuickField id="cantidadCuotas" name='cantidadCuotas'  }}
+    {{> afQuickField  name='fechaPrimerVto'  }}
+  </div>
+      <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR</button>
+ 
+ {{/autoForm}}
+ {{precioMtr2}}
+</template>
+<template name='modificarPresupuesto'>
+<h1><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> EDITAR <small> venta</small></h1>
+  {{#autoForm  collection="Presupuestos" id="modificarPresupuesto_" doc=this type="update"}}
+  <div class='col-md-4'>
+     
+     {{> afQuickField name='fecha'}}
+     {{> afQuickField name='idEntidad'}}
+     {{> afQuickField id="idLote" name='idLote'}}
+     {{> afQuickField name='estado' }}
+   
+
+  </div>
+  <div class='col-md-4'>
+     {{> afQuickField id="importe" name='importe'  }}
+     {{> afQuickField id="importeCuota" type="hidden" name='importeCuota'  }}
+     {{> afQuickField id="importeEntrega" name='importeEntrega'  }}
+     {{> afQuickField id="tasaInteres" name='tasaInteres'  }}
+     {{> afQuickField id="cantidadCuotas" name='cantidadCuotas'  }}
+     {{> afQuickField  name='fechaPrimerVto'  }}
+  </div>
+      <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR</button>
+ 
+ {{/autoForm}}
+  {{precioMtr2}}
+</template>

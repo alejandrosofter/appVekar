@@ -1,0 +1,54 @@
+<template name="informe">
+   <h1><span class="glyphicon glyphicon-scale" aria-hidden="true"></span> <b>INFORME </b> <small> lotes/ventas</small></h1>
+ <div  class='col-md-3'>
+ <h4><b><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> LIQUIDACIONES</b></h4>
+ {{> reactiveTable id="tablaLiquidaciones" settings=settingsLiquidaciones}}
+
+   
+  </div>
+
+   <div  class='col-md-6'>
+ <h4><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span> DEUDORES</b> <small>a la fecha</small> </h4>
+ {{> reactiveTable id="tablaDeudores" settings=settingsDeudores}}
+     
+      <button style="width:100%" id="btnEnviar" class="btn btn-success">
+       <span  class="glyphicon glyphicon-send" aria-hidden="true"></span>
+       Enviar <b>email</b> a DEUDORES
+     </button>
+  </div>
+     
+ </template>
+ <template name="cadaDeudorMail">
+<tr><td>{{razonSocial}}</td><td> {{email}}</td><td>{{telefono}}</td><td>{{total}}</td></tr>
+</template>
+ <template name="enviarMail">
+  <div class="modal fade"> 
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div  class="modal-body">
+                <div id="printable">
+                <h2>ENVIO MAILS <b>DEUDORES</b> </h2>
+                 
+                   <table class="table table-condensed">
+                   <thead>  <tr><th>COMPRADOR</th><th>EMAIL</th><th>TEL.</th><th>IMPORTE</th></tr> </thead>
+                   <tbody>
+                   {{# each deudoresMail}}
+	                   {{> cadaDeudorMail}}
+                   {{/each}}
+                   </tbody>
+                   </table>
+                   
+                   
+                   </div>
+                   <button id="btnEnviar" style="width:100%" class="btn btn-success">
+                   <span class="glyphicon glyphicon-send" aria-hidden="true"></span> ENVIAR</button>
+ 
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</template>

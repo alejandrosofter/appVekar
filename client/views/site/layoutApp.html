@@ -1,0 +1,120 @@
+<template name="layoutApp">
+<div class="">
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><b>LOTES</b><small> Sys</small></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+   
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Archivo <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+           
+            <li><a style="color:#b5c52b"  href="/entidades"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Entidade/s</a></li>
+            <li><a style="color:#ab3030"  href="/propietarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Propietario/s</a></li>
+			 <li><a style="color:"  href="/fiduciarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Fiduciario/s</a></li>
+             <li role="separator" class="divider"></li>
+                         <li><a style="color:#d048b3" href="/ventas"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Venta/s</a></li>
+                         <li role="separator" class="divider"></li>
+                          <li><a style="color:#5f4ee6" href="/presupuestos"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Presupuesto/s</a></li>
+    
+      <li><a style="color:#1ac527" href="/liquidaciones"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Liquidacion/es</a></li>
+          </ul>
+        </li>
+     
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+           
+            <li><a style="color:#b5c52b" id="nuevaEntidad" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Entidad</a></li>
+            <li><a style="color:#ab3030" id="nuevoPropietario" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Propietario</a></li>
+			 <li><a style="color:"  href="/nuevoFiduciario"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Fiduciario</a></li>
+
+             <li role="separator" class="divider"></li>
+                         <li><a style="color:#d048b3" class="nuevaVenta" href="#"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Venta</a></li>
+                         <li role="separator" class="divider"></li>
+                          <li><a style="color:#5f4ee6" href="/nuevoPresupuesto"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Presupuesto</a></li>
+    <li role="separator" class="divider"></li>
+                         <li><a style="color:#1ac527" href="/nuevaLiquidacion"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Liquidacion</a></li>
+                         
+          </ul>
+        </li>
+     
+        <li class="dropdown">
+          <a style="color:" href="#" class="dropdown-toggle nuevaVenta"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+            Vender
+            </a>
+        </li>
+         <li class="dropdown">
+          <a href="/nuevoPresupuesto" style="color:" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+            Presupuestar
+            </a>
+        </li>
+         <li class="dropdown">
+          <a href="/nuevaLiquidacion" style="color:" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+            Liquidar
+            </a>
+        </li>
+         <li class="dropdown">
+          <a href="/informe" style="color:" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-scale" aria-hidden="true"></span>
+            Informe
+            </a>
+        </li>
+     
+  
+
+       
+     
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <div style="float:right;color:red;display:none" id='offline'><small style="padding:5px">offline</small> </div>
+         <div style="float:right;color:green;display:none" id='online'><small style="padding:5px">online</small> </div>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{nombreUsuario}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             {{#if esAdmin}}<li><a href="/datosSistema">Datos de Sistema</a></li>{{/if}}
+            {{#if esAdmin}}<li><a href="/importarLotes">Importar Lotes</a></li>{{/if}}
+            <li><a href="javascript:salirSistema()">Salir</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  <aside>
+    {{> yield "aside"}}
+  </aside>
+
+  <div class="container-fluid">
+    {{> yield}}
+  </div>
+
+  <footer>
+    {{> footer}}
+  </footer>
+  </div>
+</template>
+<template name='footer'>
+<div class="bs-docs-footer">
+  <br><br>
+  <p align="center"><small>Sistema desarrolado por <b>SOFTER</b> softer.com.ar <br><small>Cualquier inconveniente comunicarse al <b>2975447771</b> o enviar correo a <b>info@softer.com.ar</b></small> </small></p>
+ </div>
+</template>

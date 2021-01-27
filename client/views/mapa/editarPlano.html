@@ -1,0 +1,90 @@
+
+<template name="editarPlano">
+
+<h1>EDITAR <b>PLANO</b></h1>
+
+    <div class="panel panel-default" style="padding:8px; float:right;width:150px;height:250px">
+        <div class="panel-heading">HERRAMIENTAS</div>
+  <div class="panel-body">
+    <div style="padding: 10px">
+    <table >
+      <tr><td></td><td><a  title="Arriba" class="btn btn-default btn-xs botones" id="btnArriba"><span class="glyphicon glyphicon-arrow-up"></span> </a></td><td></td></tr>
+            <tr>
+              <td><a  title="IZQUIERD" class="btn btn-default btn-xs botones" id="btnDerecha"><span class="glyphicon glyphicon-arrow-left"></span> </a></td>
+              <td><a  title="ABAJO" class="btn btn-default btn-xs botones" id="btnAbajo"><span class="glyphicon glyphicon-arrow-down"></span> </a></td>
+              <td> <a  title="DERECHA" class="btn btn-default btn-xs botones" id="btnIzquierda"><span class="glyphicon glyphicon-arrow-right"></span> </a></td>
+            </tr>
+    </table>
+  </div>
+     <div style="padding: 10px">
+      <a  title="Agregar Lote" class="btn btn-success btn-xs btn-xs" id="addLote"><span class="glyphicon glyphicon-plus-sign"></span> </a>
+    
+      <a id="btnGuardar"  title="Guardar" class="btn btn-primary btn-xs" ><span class="glyphicon glyphicon-floppy-disk"></span> </a>
+      <a id="btnLimpiar"  title="Limpiar Mapa" class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-remove"></span> </a>
+       <a id="btnRecarga"  title="Recargar Mapa" class="btn btn-primary btn-xs" ><span class="glyphicon glyphicon-refresh"></span> </a>
+
+     </div>
+     <p>ATAJOS</p>
+       <b>F4</b>= NUEVO
+    </div>
+   </div>
+   <div  id="imgMapa"> 
+    <canvas width="1050px" height="900px" id="canvasMapaLotes"></canvas>
+</div>
+</template>
+
+ <template name="cargarInfoMapa">
+  <div class="modal fade"> 
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div  class="modal-body">
+                <div id="printable">
+                <h2>INFO <b>PLANO</b> </h2>
+                <textarea rows="10"  placeholder="Datos del plano..." id="data" style="width:100%">
+                    
+                </textarea>
+                 
+                   
+                   </div>
+                   <button id="btnAceptar" style="width:100%" class="btn btn-success">
+                   <span class="glyphicon glyphicon-send" aria-hidden="true"></span> ACEPTAR</button>
+ 
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</template>
+ <template name="asignarLote">
+  <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div  class="modal-body">
+              
+                <h2><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> ASIGNAR <b>LOTE</b> <button style="float:right" id="btnVender" class="btn btn-success"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Vender</button></h2>
+                {{#autoForm  collection="DatosMapa" id="modificarDatosPlano_" type="update" doc=datos}}
+
+     <fieldset>
+      {{> afQuickField style="width:80px" name='lote'}}
+      {{> afQuickField style="width:80px" name='manzana'}}
+      {{> afQuickField name='estado'}}
+      {{> afQuickField name='comentario'}}
+      {{> afQuickField name='idPropietario'}}
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+ {{/autoForm}}
+ 
+ 
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</template>

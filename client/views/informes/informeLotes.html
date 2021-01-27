@@ -1,0 +1,69 @@
+<template name="informeLotes">
+  
+   <h1><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> <b>INFORME DE COBROS</b> <small> realizadas</small></h1>
+ <div  class='col-md-2'>
+   
+   <input class="form-control" id="anoSeleccion" type="number" value="{{anoSeleccion}}" style="width:80px;float:left" placeholder="Año"><br><br><br>
+   
+   <ul class="list-group">
+  
+    {{#each mes in meses}}
+     {{>cadaMesVentas mes=mes}}
+   {{/each}}
+  
+</ul>
+   
+  </div>
+
+   <div  class='col-md-6'>
+      <div id="printArea">
+       {{>detalleMesVentas mes=mesSeleccion items=itemsSeleccion}}
+     
+     
+     </div>
+     
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+ 
+</template>
+<template name="cadaMesVentas">
+<li class="list-group-item"><a style="cursor:pointer" class="mesSeleccion">{{mes}}</a>  
+  <span class="mesVentas label {{claseTotalMes}}" style="cursor:pointer;float:right">$ {{totalMes}}</span> </li>
+</template>
+  <template name="cadaDiaVentas">
+<li class="{{claseDiaSemana}} list-group-item"><a style="cursor:pointer" class="diaSeleccion">{{dia}}</a>  
+  <span class="diaVentas label {{claseTotalDia}}" style="cursor:pointer;float:right">$ {{totalDia}}</span> </li>
+</template>
+<template name="detalleMesVentas">
+<h2>DETALLE DE <b> {{tituloMes}}</b></h2>
+  <table class="table table-condensed">
+<thead><tr><th>FECHA</th><th>DETALLE</th><th>IMPORTE</th></tr></thead>
+    <tbody>
+ {{#each items}}
+{{>filaDetalleMesSeleccionVentas}}
+ {{/each}}
+     
+        </tbody>
+  </table>
+   <h4 style="float:right">TOTAL <b>$ {{totalMes}}</b></h4>
+ <h3><b>FIDUCIARIOS</b> a pagar</h3>
+    <table class="table table-condensed">
+<thead><tr><th>FIDUCIARIO</th><th>PORCENTAJE</th><th>IMPORTE PAGAR</th></tr></thead>
+    <tbody>
+ {{#each itemsFiduciarios}}
+{{>filaFiduciarios}}
+ {{/each}}
+     
+        </tbody>
+  </table>
+</template>
+<template name="filaFiduciarios">
+  <tr><td>{{fiduciario}}</td><td>{{porcentaje}}</td><td>{{importePagar}}</td></tr>   
+</template>
+<template name="filaDetalleMesSeleccionVentas">
+  <tr><td>{{fecha}}</td><td>{{detalle}}</td><td>{{importeDet}}</td></tr>   
+</template>

@@ -1,0 +1,46 @@
+<template name="fiduciarios">
+   <h1><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> FIDUCIARIOS <small>modulo principal</small><button id="btnAgregar" style="float:right" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus" ></span> AGREGAR</button></h1>
+{{> reactiveTable id="tablaFiduciarios" settings=settings}}
+
+</template>
+<template name="accionesFiduciarios">
+  <div class="acciones" style="display:none">
+   <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+      <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+<template name='nuevoFiduciario'>
+<h1><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> AGREGAR <small> fiduciario</small></h1>
+  {{#autoForm  collection="Fiduciarios" id="nuevoFiduciario_" type="insert"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+     {{> afQuickField name='razonSocial'}}
+       {{> afQuickField name='telefono' style="width:180px" placeholder="Ej. 297 - - - - - -"  type="tel"}}
+      {{> afQuickField name='email'  type="email"}}
+         {{> afQuickField name='porcentaje' }}
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR</button>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>
+<template name='modificarFiduciario'>
+<h1><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> EDITAR <small> fiduciario</small></h1>
+  {{#autoForm  collection="Fiduciarios" id="modificarFiduciario_" doc=this type="update"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+      {{> afQuickField name='razonSocial'}}
+       {{> afQuickField name='telefono' style="width:180px" placeholder="Ej. 297 - - - - - -"  type="tel"}}
+      {{> afQuickField name='email'  type="email"}}
+         {{> afQuickField name='porcentaje' }}
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> MODIFICAR</button>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>
